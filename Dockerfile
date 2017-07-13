@@ -50,7 +50,7 @@ RUN cd /opt \
 	&& make && make install \
 	&& cd / \
 	&& rm -rf opencv-$OPENCV_VERSION \
-  && rm -rf /opt/nvidia_installers \
-  && rm -rf /opt/cuda_6.5.14_linux_64.run
+	&& rm -rf /opt/nvidia_installers \
+	&& rm -rf /opt/cuda_6.5.14_linux_64.run
 
 CMD ["/bin/bash"]
