@@ -12,7 +12,9 @@ RUN apt-get update && apt-get install -q -y \
   unzip \
   cmake \
   pkg-config \
-  build-essential 
+  build-essential \
+  python-dev \
+  python-pip
 
 RUN cd /opt && \
   wget $CUDA_RUN && \
@@ -20,18 +22,20 @@ RUN cd /opt && \
   mkdir nvidia_installers && \
   ./cuda_6.5.14_linux_64.run -extract=`pwd`/nvidia_installers && \
   cd nvidia_installers && \
-  ./NVIDIA-Linux-x86_64-340.29.run -s -N --no-kernel-module
-
-RUN cd /opt/nvidia_installers && \
-  ./cuda-samples-linux-6.5.14-18745345.run -noprompt
+  ./NVIDIA-Linux-x86_64-340.29.run -s -N --no-kernel-module && \
+  ./cuda-samples-linux-6.5.14-18745345.run -noprompt -cudaprefix=/usr/local/cuda-6.5/
 
 # Ensure the CUDA libs and binaries are in the correct environment variables
 ENV LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64
 ENV PATH=$PATH:/usr/local/cuda-6.5/bin
 
 RUN	pip install numpy
-# RUN	apt-get install -y -q libavformat-dev libavcodec-dev libavfilter-dev libswscale-dev
-RUN	apt-get install -y -q libjpeg-dev libpng-dev libtiff-dev libjasper-dev zlib1g-dev libopenexr-dev libxine-dev libeigen3-dev libtbb-dev
+RUN	apt-get install -y -q \
+  libjpeg-dev libpng-dev libtiff-dev \
+  libjasper-dev zlib1g-dev libopenexr-dev \
+  libxine-dev libeigen3-dev libtbb-dev \
+  libavformat-dev libavcodec-dev libavfilter-dev \
+  libswscale-dev
 
 # Install OpenCV
 RUN wget 'http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/2.4.11/opencv-2.4.11.zip/download' -O opencv-2.4.11.zip \
