@@ -1,7 +1,5 @@
-FROM ubuntu:14.04
+FOM ubuntu:14.04
 MAINTAINER Vitor Carvalho <vitorcarvalhoml@gmail.com>
-
-# A docker container with the Nvidia kernel module and CUDA drivers installed
 
 ENV CUDA_RUN http://developer.download.nvidia.com/compute/cuda/6_5/rel/installers/cuda_6.5.14_linux_64.run
 
