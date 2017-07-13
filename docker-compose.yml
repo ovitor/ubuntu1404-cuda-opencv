@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+    cuda_opencv:
+        build: .
+        image: anki/cuda_opencv:0.1
+        container_name: cuda_opencv
