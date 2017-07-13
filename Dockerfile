@@ -52,5 +52,8 @@ RUN cd /opt \
 	&& rm -rf opencv-$OPENCV_VERSION \
 	&& rm -rf /opt/nvidia_installers \
 	&& rm -rf /opt/cuda_6.5.14_linux_64.run
+	&& apt-get remove --purge -y wget \
+	&& apt-get -y --purge autoremove \
+	&& rm -rf /var/lib/apt/lists/*
 
 CMD ["/bin/bash"]
