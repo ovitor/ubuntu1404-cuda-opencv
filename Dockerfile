@@ -17,8 +17,8 @@ RUN apt-get update && apt-get install -q -y \
 	build-essential \
 	python-dev \
 	python-pip \
-  && chmod +x /tmp/cuda.run \ 
-  && mkdir /nvidia_installers \
+	&& chmod +x /tmp/cuda.run \
+	&& mkdir /nvidia_installers \
 	&& /tmp/./cuda.run -extract=/nvidia_installers \
 	&& /nvidia_installers/./NVIDIA-Linux-x86_64-340.29.run -s -N --no-kernel-module \
 	&& /nvidia_installers/./cuda-samples-linux-6.5.14-18745345.run -noprompt -cudaprefix=/usr/local/cuda-6.5/ \
@@ -36,15 +36,15 @@ RUN apt-get update && apt-get install -q -y \
 		libavformat-dev \
 		libavcodec-dev \
 		libavfilter-dev \
-    libswscale-dev \
+		libswscale-dev \
 	&& unzip /tmp/opencv-2.4.11.zip \
 	&& rm /tmp/opencv-2.4.11.zip \
-	&& mkdir -p /opencv-2.4.11/release \
-	&& cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D BUILD_PYTHON_SUPPORT=ON -D WITH_XINE=ON -D WITH_TBB=ON /nvidia_installers \
-	&& /nvidia_installers/ \
-  && make \
-  && make install \
-	&& cd ..\
+	&& mkdir -p /tmp/opencv-2.4.11/release\
+	&& cd /tmp/opencv-2.4.11/release \
+		&& cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D BUILD_PYTHON_SUPPORT=ON -D WITH_XINE=ON -D WITH_TBB=ON ..\
+			&& make \
+		&& make install \
+	&& cd /\
 	&& rm -rf /tmp/opencv-2.4.11 \
 	&& rm -rf /tmp/cuda.run \
 	&& rm -rf /nvidia_installers \
@@ -52,3 +52,4 @@ RUN apt-get update && apt-get install -q -y \
 	&& apt-get -y --purge autoremove \
 	&& rm -rf /var/lib/apt/lists/*
 
+CMD ["/bin/bash"]
