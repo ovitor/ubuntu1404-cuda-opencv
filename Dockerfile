@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 MAINTAINER Vitor Carvalho <vitorcarvalhoml@gmail.com>
 
-ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64" \
+ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64:/usr/local/lib" \
 	PATH="$PATH:/usr/local/cuda-6.5/bin"
 
 ADD https://ufpr.dl.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.11/opencv-2.4.11.zip /tmp/opencv-2.4.11.zip
@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -q -y \
 	python-dev \
 	python-pip \
 	&& chmod +x /tmp/cuda.run \
+    && sync \
 	&& mkdir /nvidia_installers \
 	&& /tmp/./cuda.run -extract=/nvidia_installers \
 	&& /nvidia_installers/./NVIDIA-Linux-x86_64-340.29.run -s -N --no-kernel-module \
