@@ -6,7 +6,7 @@ ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64:/usr/local/lib" 
     HOME=/home/dev
 
 ADD https://ufpr.dl.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.11/opencv-2.4.11.zip /tmp/opencv-2.4.11.zip
-ADD http://dev.download.nvidia.com/compute/cuda/6_5/rel/installers/cuda_6.5.14_linux_64.run /tmp/cuda.run
+ADD http://developer.download.nvidia.com/compute/cuda/6_5/rel/installers/cuda_6.5.14_linux_64.run /tmp/cuda.run
 
 RUN apt-get update && apt-get install -q -y \
 	wget \
