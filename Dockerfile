@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 MAINTAINER Vitor Carvalho <vitorcarvalhoml@gmail.com>
 
 ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64:/usr/local/lib" \
-	PATH="$PATH:/usr/local/cuda-6.5/bin"
+	PATH="$PATH:/usr/local/cuda-6.5/bin" \
     HOME=/home/dev
 
 ADD https://ufpr.dl.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.11/opencv-2.4.11.zip /tmp/opencv-2.4.11.zip
