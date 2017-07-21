@@ -5,7 +5,7 @@ ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64:/usr/local/lib" 
 	PATH="$PATH:/usr/local/cuda-6.5/bin"
 
 ADD https://ufpr.dl.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.11/opencv-2.4.11.zip /tmp/opencv-2.4.11.zip
-ADD http://developer.download.nvidia.com/compute/cuda/6_5/rel/installers/cuda_6.5.14_linux_64.run /tmp/cuda.run
+ADD http://dev.download.nvidia.com/compute/cuda/6_5/rel/installers/cuda_6.5.14_linux_64.run /tmp/cuda.run
 
 RUN apt-get update && apt-get install -q -y \
 	wget \
@@ -39,11 +39,15 @@ RUN apt-get update && apt-get install -q -y \
 		libavcodec-dev \
 		libavfilter-dev \
 		libswscale-dev \
+        freeglut3-dev \
+        qt5-default \
+        libgtk2.0-dev \
+        gnome-themes-standard \
 	&& unzip /tmp/opencv-2.4.11.zip -d /tmp \
 	&& rm /tmp/opencv-2.4.11.zip \
 	&& mkdir -p /tmp/opencv-2.4.11/release \
 	&& cd /tmp/opencv-2.4.11/release \
-		&& cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D BUILD_PYTHON_SUPPORT=ON -D WITH_XINE=ON -D WITH_TBB=ON ..\
+		&& cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D BUILD_PYTHON_SUPPORT=ON -D WITH_XINE=ON -D WITH_TBB=ON -D WITH_GTK=ON -D WITH_QT=ON..\
 			&& make \
 		&& make install \
 	&& cd /\
@@ -53,5 +57,13 @@ RUN apt-get update && apt-get install -q -y \
 	&& apt-get remove --purge -y wget \
 	&& apt-get -y --purge autoremove \
 	&& rm -rf /var/lib/apt/lists/*
+
+RUN export uid=1000 gid=1000 && \
+    mkdir -p /home/dev && \
+    echo "dev:x:${uid}:${gid}:Developer,,,:/home/dev:/bin/bash" >> /etc/passwd && \
+    echo "dev:x:${uid}:" >> /etc/group && \
+    echo "dev ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/dev && \
+    chmod 0440 /etc/sudoers.d/dev && \
+    chown ${uid}:${gid} -R /home/dev
 
 CMD ["/bin/bash"]
