@@ -3,6 +3,7 @@ MAINTAINER Vitor Carvalho <vitorcarvalhoml@gmail.com>
 
 ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64:/usr/local/lib" \
 	PATH="$PATH:/usr/local/cuda-6.5/bin"
+    HOME=/home/dev
 
 ADD https://ufpr.dl.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.11/opencv-2.4.11.zip /tmp/opencv-2.4.11.zip
 ADD http://dev.download.nvidia.com/compute/cuda/6_5/rel/installers/cuda_6.5.14_linux_64.run /tmp/cuda.run
@@ -65,5 +66,7 @@ RUN export uid=1000 gid=1000 && \
     echo "dev ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/dev && \
     chmod 0440 /etc/sudoers.d/dev && \
     chown ${uid}:${gid} -R /home/dev
+
+USER dev
 
 CMD ["/bin/bash"]
